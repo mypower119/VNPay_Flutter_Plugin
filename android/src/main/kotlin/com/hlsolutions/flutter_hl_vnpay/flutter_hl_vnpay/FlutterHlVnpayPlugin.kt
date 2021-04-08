@@ -67,10 +67,11 @@ class FlutterHlVnpayPlugin : FlutterPlugin, ActivityAware, PluginRegistry.Activi
             putExtra("url", paymentUrl)
             putExtra("scheme", scheme)
             putExtra("tmn_code", tmnCode)
+            setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         }
 
-        VNP_AuthenticationActivity.setSdkCompletedCallback(VNP_SdkCompletedCallback() {
-            fun sdkAction(s: String) {
+        VNP_AuthenticationActivity.setSdkCompletedCallback(object: VNP_SdkCompletedCallback {
+            override fun sdkAction(s: String) {
                 //action == AppBackAction
                 //Người dùng nhấn back từ sdk để quay lại
 

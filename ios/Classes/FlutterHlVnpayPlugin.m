@@ -63,16 +63,29 @@
 
         NSString *actionValue=[notification.object valueForKey:@"Action"];
         if ([@"AppBackAction" isEqualToString:actionValue]) {//Người dùng nhấn back từ sdk để quay lại
-            [_channel invokeMethod:@"PaymentBack" arguments:@{@"resultCode":@-1}];
+            //Người dùng nhấn back từ sdk để quay lại
+            [self sendEventWithName:@"PaymentBack" body:@{@"resultCode":@-1}];
             return;
         }
-        if ([@"WebBackAction" isEqualToString:actionValue]) {//Người dùng nhấn back từ trang thanh toán thành công khi thanh toán qua thẻ khi gọi đến http://sdk.merchantbackapp
-            [_channel invokeMethod:@"PaymentBack" arguments:@{@"resultCode":@10}];
+        if ([@"CallMobileBankingApp" isEqualToString:actionValue]) {
+            //Người dùng nhấn chọn thanh toán qua app thanh toán (Mobile Banking, Ví...)
+            //lúc này app tích hợp sẽ cần lưu lại cái PNR, khi nào người dùng mở lại app tích hợp thì sẽ gọi kiểm tra trạng thái thanh toán của PNR Đó xem đã thanh toán hay chưa.
+            [self sendEventWithName:@"PaymentBack" body:@{@"resultCode":@10}];
             return;
         }
-
-        if ([@"CallMobileBankingApp" isEqualToString:actionValue]) {//Người dùng nhấn chọn thanh toán qua app thanh toán (Mobile Banking, Ví...)
-            [_channel invokeMethod:@"PaymentBack" arguments:@{@"resultCode":@99}];
+        if ([@"WebBackAction" isEqualToString:actionValue]) {
+            //Người dùng nhấn back từ trang thanh toán thành công khi thanh toán qua thẻ khi gọi đến http://sdk.merchantbackapp
+            [self sendEventWithName:@"PaymentBack" body:@{@"resultCode":@99}];
+            return;
+        }
+        if ([@"FaildBackAction" isEqualToString:actionValue]) {
+            //giao dịch thanh toán bị failed
+            [self sendEventWithName:@"PaymentBack" body:@{@"resultCode":@98}];
+            return;
+        }
+        if ([@"SuccessBackAction" isEqualToString:actionValue]) {
+            //thanh toán thành công trên webview
+            [self sendEventWithName:@"PaymentBack" body:@{@"resultCode":@97}];
             return;
         }
     }
