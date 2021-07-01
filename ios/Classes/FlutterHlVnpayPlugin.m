@@ -46,7 +46,7 @@
     self.latestScheme = scheme;
 
     [CallAppInterface setSchemes:scheme];
-    [CallAppInterface setIsSandbox:NO];
+    [CallAppInterface setIsSandbox:YES];
     [CallAppInterface setAppBackAlert:backAlert];
     [CallAppInterface showPushPaymentwithPaymentURL:paymentUrl
                                           withTitle:title
