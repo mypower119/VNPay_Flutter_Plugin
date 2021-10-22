@@ -18,6 +18,9 @@ rootProject.allprojects {
     repositories {
         google()
         jcenter()
+        flatDir {
+            dirs 'libs'
+        }
     }
 }
 
@@ -40,7 +43,8 @@ android {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation files('libs/Sdk-release1.17_live.aar')
+//    implementation files('libs/Sdk-release1.17_live.aar')
+    implementation(name:'Sdk-release1.17_live', ext:'aar')
     implementation 'com.squareup.okhttp3:okhttp:3.7.0'
     implementation 'com.google.code.gson:gson:2.8.5'
 }
