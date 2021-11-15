@@ -28,8 +28,6 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)setSchemes:(NSString*)schm;
 + (void)setIsSandbox:(BOOL)isSandBox;
 
-+(void)setEnableBackAction:(BOOL)backEnable;// = True luôn luôn có action khi bấm back
-
 @end
 
 
